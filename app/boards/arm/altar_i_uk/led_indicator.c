@@ -32,12 +32,22 @@ enum BOARD_STATE {
     BOARD_READY = 5,
 } static board_state;
 
-static int indicator_callback() {
+static int indicator_callback(const zmk_event_t *eh) {
     if (board_state < BOARD_READY) {
         return ZMK_EV_EVENT_BUBBLE;
     }
 
-    zmk_hid_indicators_t indicators = zmk_hid_indicators_get_current_profile();
+    // NULL is a special case for pairing event calling here
+    // there is probably no real difference on using data on the event or calling the getter
+    // ... but using the event sounds more correct and avoids the tiny tiny overhead of func call(s)
+    // we just read the value
+    zmk_hid_indicators_t indicators;
+    if (eh != NULL) {
+        struct zmk_hid_indicators_changed *event_info = as_zmk_hid_indicators_changed(eh);
+        indicators = event_info->indicators;
+    } else {
+        indicators = zmk_hid_indicators_get_current_profile();
+    }
 
     if (indicators & CAPS_LOCK_MASK) {
         led_on(led_dev, 0);
@@ -81,7 +91,7 @@ static int pairing_callback() {
     } else {
         k_work_cancel_delayable(&blink_work);
         board_state = BOARD_READY;
-        indicator_callback();
+        indicator_callback(NULL);
     }
 
     return ZMK_EV_EVENT_BUBBLE;
