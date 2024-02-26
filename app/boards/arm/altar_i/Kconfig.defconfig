@@ -1,7 +1,7 @@
 # Copyright (c) 2023 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-if BOARD_ALTAR_I_US
+if BOARD_ALTAR_I
 
 config ZMK_KEYBOARD_NAME
     default "Altar I"
@@ -25,4 +25,4 @@ config ZMK_BLE
 config ZMK_USB
     default y
 
-endif # BOARD_ALTAR_I_US
+endif # BOARD_ALTAR_I

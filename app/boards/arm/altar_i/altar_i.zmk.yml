@@ -1,6 +1,6 @@
 file_format: "1"
-id: altar_i_uk
-name: ALTAR I - UK
+id: altar_i
+name: ALTAR I
 type: board
 arch: arm
 features:

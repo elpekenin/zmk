@@ -1,5 +1,5 @@
-identifier: ALTAR_I_UK
-name: ALTAR I - UK
+identifier: ALTAR_I
+name: ALTAR I
 type: keyboard
 arch: arm
 toolchain:
