@@ -1,0 +1,24 @@
+if BOARD_WEACT_STM32H750
+
+config BOARD
+    default "WEACT_STM32H750"
+
+config DISK_DRIVER_SDMMC
+    default y
+
+config ZMK_USB
+    default y
+
+config ZMK_KSCAN_DIRECT_POLLING
+    default y
+
+config USB_DEVICE_STACK
+    default y
+
+# config FLASH_BASE_ADDRESS
+#   default 0x90000000
+
+# config BUILD_OUTPUT_UF2_USE_FLASH_BASE
+#   default y
+
+endif # BOARD_WEACT_STM32H750

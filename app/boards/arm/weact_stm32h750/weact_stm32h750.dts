@@ -1,0 +1,193 @@
+/*
+ * Copyright (c) 2019 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <st/h7/stm32h750Xb.dtsi>
+#include <st/h7/stm32h750vbtx-pinctrl.dtsi>
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+
+/ {
+    model = "WEACT_STM32H750";
+    compatible = "st,stm32h750";
+
+    chosen {
+        zephyr,flash = &flash0;
+        zephyr,sram = &sram0;
+        zmk,kscan = &kscan0;
+        zephyr,console = &cdc_acm_uart;
+        // zephyr,display = &ltdc;
+        // zephyr,flash-controller = &w25q64;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        blue_led: blue_led {
+            gpios = <&gpioe 3 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    aliases {
+        led0 = &blue_led;
+        // spi-flash0 = &w25q64;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        input-gpios = <&gpioc 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+    };
+};
+
+&usbotg_fs {
+    status = "okay";
+    pinctrl-0 = <
+        &usb_otg_fs_dm_pa11
+        &usb_otg_fs_dp_pa12
+    >;
+    pinctrl-names = "default";
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+&clk_hse {
+    status = "okay";
+    clock-frequency = <DT_FREQ_M(25)>;
+};
+
+&clk_hsi48 {
+    status = "okay";
+};
+
+&pll {
+    div-m = <5>;
+    mul-n = <160>;
+    div-p = <2>;
+    div-q = <4>;
+    div-r = <2>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&rcc {
+    clocks = <&pll>;
+    clock-frequency = <DT_FREQ_M(400)>;
+    d1cpre = <1>;
+    hpre = <2>;
+    d1ppre = <2>;
+    d2ppre1 = <2>;
+    d2ppre2 = <2>;
+    d3ppre = <2>;
+};
+
+&sdmmc1 {
+    status = "okay";
+    pinctrl-0 = <
+        &sdmmc1_d0_pc8
+        &sdmmc1_d1_pc9
+        &sdmmc1_d2_pc10
+        &sdmmc1_d3_pc11
+        &sdmmc1_ck_pc12
+        &sdmmc1_cmd_pd2
+    >;
+    cd-gpios = <&gpiod 4 GPIO_ACTIVE_LOW>;
+    pinctrl-names = "default";
+};
+
+// &quadspi {
+//     pinctrl-0 = <
+//         &quadspi_clk_pb2
+//         &quadspi_bk1_ncs_pb6
+//         &quadspi_bk1_io0_pd11
+//         &quadspi_bk1_io1_pd12
+//         &quadspi_bk1_io2_pe2
+//         &quadspi_bk1_io3_pd13
+//     >;
+//     pinctrl-names = "default";
+//     status = "okay";
+
+//     w25q64: qspi-nor-flash@0 {
+//         compatible = "st,stm32-qspi-nor";
+//         reg = <0>;
+//         qspi-max-frequency = <72000000>;
+//         size = <DT_SIZE_M(64)>; /* 8 MBytes */
+//         spi-bus-width = <4>;
+//         status = "okay";
+
+//         partitions {
+//                compatible = "fixed-partitions";
+//                #address-cells = <1>;
+//                #size-cells = <1>;
+
+//                partition@0 {
+//                    reg = <0x0 DT_SIZE_M(8)>;
+//                };
+//         };
+//     };
+// };
+
+// &ltdc {
+//     status = "okay";
+//     pinctrl-names = "default";
+
+//     pinctrl-0 = <
+//         &ltdc_r1_pa2
+//         &ltdc_r2_pa1
+//         &ltdc_r3_pb0
+//         &ltdc_r4_pa5
+//         &ltdc_r5_pa9
+//         &ltdc_r6_pb1
+//         &ltdc_r7_pe15
+
+//         &ltdc_g0_pe5
+//         &ltdc_g1_pe6
+//         &ltdc_g2_pa6
+//         &ltdc_g3_pe11
+//         &ltdc_g4_pb10
+//         &ltdc_g5_pb11
+//         &ltdc_g6_pc7
+//         &ltdc_g7_pd3
+
+//         &ltdc_b0_pe4
+//         &ltdc_b1_pa10
+//         &ltdc_b2_pd6
+//         &ltdc_b3_pd10
+//         &ltdc_b4_pe12
+//         &ltdc_b5_pa3
+//         &ltdc_b6_pb8
+//         &ltdc_b7_pb9
+
+//         &ltdc_vsync_pa4
+//         &ltdc_hsync_pc6
+//         &ltdc_de_pe13
+//         &ltdc_clk_pe14
+//     >;
+
+//     /* TDB */
+//     disp-on-gpios = <&gpioi 12 GPIO_ACTIVE_HIGH>;
+//     bl-ctrl-gpios = <&gpiok 3 GPIO_ACTIVE_HIGH>;
+
+//     width = <800>;
+//     height = <480>;
+//     pixel-format = <PANEL_PIXEL_FORMAT_RGB_565>;
+//     display-timings {
+//         compatible = "zephyr,panel-timing";
+//         de-active = <0>;
+//         pixelclk-active = <0>;
+//         hsync-active = <0>;
+//         vsync-active = <0>;
+//         hsync-len = <29>;
+//         vsync-len = <3>;
+//         hback-porch = <30>;
+//         vback-porch = <4>;
+
+//         /* ??? */
+//         hfront-porch = <8>;
+//         vfront-porch = <4>;
+//     };
+//     def-back-color-red = <0xFF>;
+//     def-back-color-green = <0xFF>;
+//     def-back-color-blue = <0xFF>;
+// };

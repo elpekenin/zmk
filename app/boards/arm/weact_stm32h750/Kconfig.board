@@ -1,0 +1,4 @@
+config BOARD_WEACT_STM32H750
+    bool "STM32H750 Development Board"
+    depends on SOC_STM32H750XX
+    select CPU_CORTEX_M7
