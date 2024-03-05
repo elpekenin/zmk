@@ -12,3 +12,8 @@ west-commands:
       - name: metadata
         class: Metadata
         help: Operate on ZMK metadata files
+  - file: scripts/west_commands/compile_everything.py
+    commands:
+      - name: compile_everything
+        class: CompileEverything
+        help: (try) compile every possible configuration
