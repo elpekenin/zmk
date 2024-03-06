@@ -1,12 +1,14 @@
 # Copyright (c) 2024 The ZMK Contributors
 # SPDX-License-Identifier: MIT
-"""(Try) Test all features."""
+"""(Try) Compile every keyboard configuration."""
 
+import argparse
 import subprocess
 import sys
 import yaml
 from collections import defaultdict
 from pathlib import Path
+from typing import Iterable, Optional
 
 from west.commands import WestCommand
 
@@ -16,24 +18,90 @@ class CompileEverything(WestCommand):
     def __init__(self):
         super().__init__(
             name="compile_everything",
-            help="(try) compile every possible configuration",
-            description="(Try) compile every possible configuration.",
+            help="(try) compile every keyboard configuration",
+            description="(Try) compile every keyboard configuration.",
         )
 
     def do_add_parser(self, parser_adder):
+        """Define custom flags/options.
+        """
         parser = parser_adder.add_parser(
             self.name,
             help=self.help,
             description=self.description,
         )
+
+        parser.add_argument(
+            "--verbose",
+            action=argparse.BooleanOptionalAction,
+            default=True,
+            help="Whether to print compiler's stderr on fails. Default: True",
+        )
+
+        parser.add_argument(
+            "--failfast",
+            action=argparse.BooleanOptionalAction,
+            default=False,
+            help="Whether the command stops after a compilation fails. Default: False",
+        )
+
         return parser
 
-    def _gather_targets(self, boards_dir: Path) -> tuple[dict[str, set[str]], dict[str, set[str]]]:
-        # map archs to boards >> arm: {kb1, kb2}
-        boards = defaultdict(set)
-        # map interconnect to boards >> pro_micro: {kb_3, kb_4}
-        interconnects = defaultdict(set)
+    def _get_yamls(self, dir: Path) -> Iterable[dict]:
+        """Read ZMK's metadata files in the given directory.
+        """
+        for yaml_file in dir.glob(f"*{ZMK_YML}"):
+            with yaml_file.open("r") as f:
+                yield yaml.safe_load(f)
 
+    def _gather_targets_impl(self, dir: Path, boards: list[str], exposes: dict[str, str], requires: dict[str, str]):
+        """Actual implementation for gathering targets from a leaf folder.
+        """
+
+        # base case, nothing to do with files
+        if not dir.is_dir():
+            return
+        
+        # make sure we iterate our children (if any)
+        for child in dir.iterdir():
+            self._gather_targets_impl(child, boards, exposes, requires)
+
+        # actual logic for this folder
+        for metadata in self._get_yamls(dir):
+            _id = metadata.get("id")
+
+            ids = metadata.get("siblings", [_id])
+            if ids is None:
+                raise ValueError(metadata)
+
+            # assuming multi -require/-expose is not a thing
+
+            # interconnects
+            _exposes = metadata.get("exposes")
+            if _exposes is not None:
+                exposes[_id] = _exposes[0]
+                continue
+
+            # shields
+            _requires = metadata.get("requires")
+            if _requires is not None:
+                for id_ in ids:  # could be split
+                    requires[id_] = _requires[0]
+
+                continue
+
+            # at this point, yaml for a regular keyboard
+            boards.extend(ids)
+
+    def _gather_targets(self, boards_dir: Path) -> tuple[list[str], dict[str, list[str]]]:
+        """Collect valid targets by iterating over zmk/app/boards
+
+        Returns dict of entries:
+          - board_name: {}
+          - interconnect: {shields}
+        """
+
+        boards, exposes, requires = [], {}, {}
         for child in boards_dir.iterdir():
             if (
                 not child.is_dir()  # overlay files at the root of the folder
@@ -41,34 +109,28 @@ class CompileEverything(WestCommand):
             ):
                 continue
 
-            if child.name == "shields":
-                for shield in child.iterdir():
-                    metadata_file = shield / f"{shield.name}{ZMK_YML}"
-                    if not metadata_file.exists():
-                        self.wrn(f"{shield.name} does not have a {ZMK_YML}", )
-                        continue
+            self._gather_targets_impl(child, boards, exposes, requires)
 
-                    # lets assume metadata.py was run already and the files
-                    # have valid contents already. dont validate them
-                    with metadata_file.open("r") as f:
-                        metadata = yaml.safe_load(f)
-
-                    # assuming we always have this attribute and it is
-                    # always a 1-element list
-                    interconnect = metadata["requires"][0]
-                    interconnects[interconnect].add(shield.name)
-
-            # at this stage, we should be on an arch folder
-            else:
-                arch = child.name
-                for board_folder in child.iterdir():
-                    for board in board_folder.glob(f"*{ZMK_YML}"):
-                        boards[arch].add(board.name.rstrip(ZMK_YML))
+        # parse targets from exposes/requires
+        interconnects = defaultdict(list)
+        for shield, req in requires.items():
+            for connect, exp in exposes.items():
+                if exp == req:
+                    interconnects[connect].append(shield)
+                    break
 
         return boards, interconnects
 
-    def _compile(self, zmk_app_dir: Path, command: str, display_name: str) -> bool:
-        self.inf(f"Compiling {display_name}", end=" ")
+    def _compile(self, zmk_app_dir: Path, board: str, shield: Optional[str] = None) -> bool:
+        """Try and compile a board, printing some information on the process.
+
+        Return: Whether the command ran successfully
+        """
+
+        command = f"west build -p -b {board} -d build/{board}_{shield}"
+        
+        if shield is not None:
+            command += f" -- -DSHIELD={shield}"
 
         out = subprocess.run(
             command,
@@ -78,14 +140,25 @@ class CompileEverything(WestCommand):
         )
 
         if out.returncode == 0:
-            self.inf("✓")
-            return True
+            self.inf(f"{command}: ✓")
         else:
-            self.inf("❌")
-            self.err(out.stderr)
-            return False
+            self.err(f"{command}: ❌")
+
+            self.failed = True
+
+            if self.verbose:
+                self.err(out.stderr)
+
+            if self.failfast:
+                sys.exit(0)
 
     def do_run(self, args, unknown_args):
+        """Command's entrypoint. Collect and (try) compile all boards in the repo.
+        """
+
+        self.verbose = args.verbose
+        self.failfast = args.failfast
+
         # walk backwards: .py / west_commands / script / app
         this_file = Path(__file__)
         zmk_app_dir = this_file.parent.parent.parent
@@ -93,25 +166,12 @@ class CompileEverything(WestCommand):
 
         boards, interconnects = self._gather_targets(boards_dir)
 
-        failed = False
+        self.failed = False
         for interconnect, shields in interconnects.items():
-            # remove interconnects from target boards, they are not actual valid targets
-            for _arch, boards_ in boards.items():
-                boards_.discard(interconnect)
-
-            # this code is broken right now, trying to compile "pro_micro" is not valid
-            break
             for shield in shields:
-                command = f"west build -p -b {interconnect} -- -DSHIELD={shield}"
-                name = f"{interconnect}/{shield}"
-                if not self._compile(zmk_app_dir, command, name):
-                    failed = True
+                self._compile(zmk_app_dir, interconnect, shield)
 
-        for _arch, boards_ in boards.items():
-            for board in boards_:
-                command = f"west build -p -b {board}"
-                name = board
-                if not self._compile(zmk_app_dir, command, name):
-                    failed = True
+        for board in boards:
+            self._compile(zmk_app_dir, board, None)
 
-        sys.exit(1 if failed else 0)
+        sys.exit(1 if self.failed else 0)

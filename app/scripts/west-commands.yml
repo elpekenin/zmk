@@ -16,4 +16,4 @@ west-commands:
     commands:
       - name: compile_everything
         class: CompileEverything
-        help: (try) compile every possible configuration
+        help: (try) compile every keyboard configuration
