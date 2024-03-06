@@ -45,6 +45,13 @@ class CompileEverything(WestCommand):
             help="Whether the command stops after a compilation fails. Default: False",
         )
 
+        parser.add_argument(
+            "--list",
+            action=argparse.BooleanOptionalAction,
+            default=False,
+            help="List available outputs, eg: to parallelize their build on GHA. Default: False",
+        )
+
         return parser
 
     def _get_yamls(self, dir: Path) -> Iterable[dict]:
@@ -91,14 +98,13 @@ class CompileEverything(WestCommand):
                 continue
 
             # at this point, yaml for a regular keyboard
-            boards.extend(ids)
+            for id_ in ids:
+                boards.append((id_, None))
 
-    def _gather_targets(self, boards_dir: Path) -> tuple[list[str], dict[str, list[str]]]:
+    def _gather_targets(self, boards_dir: Path) -> list[tuple[str, Optional[str]]]:
         """Collect valid targets by iterating over zmk/app/boards
 
-        Returns dict of entries:
-          - board_name: {}
-          - interconnect: {shields}
+        Returns dict of targets: board, Optional[shield]
         """
 
         boards, exposes, requires = [], {}, {}
@@ -112,14 +118,13 @@ class CompileEverything(WestCommand):
             self._gather_targets_impl(child, boards, exposes, requires)
 
         # parse targets from exposes/requires
-        interconnects = defaultdict(list)
         for shield, req in requires.items():
             for connect, exp in exposes.items():
                 if exp == req:
-                    interconnects[connect].append(shield)
+                    boards.append((connect, shield))
                     break
 
-        return boards, interconnects
+        return boards
 
     def _compile(self, zmk_app_dir: Path, board: str, shield: Optional[str] = None) -> bool:
         """Try and compile a board, printing some information on the process.
@@ -127,8 +132,8 @@ class CompileEverything(WestCommand):
         Return: Whether the command ran successfully
         """
 
-        command = f"west build -p -b {board} -d build/{board}_{shield}"
-        
+        command = f"west build -p -b {board}"
+
         if shield is not None:
             command += f" -- -DSHIELD={shield}"
 
@@ -140,9 +145,9 @@ class CompileEverything(WestCommand):
         )
 
         if out.returncode == 0:
-            self.inf(f"{command}: ✓")
+            self.inf(f"{command}: ok")
         else:
-            self.err(f"{command}: ❌")
+            self.err(f"{command}: fail")
 
             self.failed = True
 
@@ -164,14 +169,25 @@ class CompileEverything(WestCommand):
         zmk_app_dir = this_file.parent.parent.parent
         boards_dir = zmk_app_dir / "boards"
 
-        boards, interconnects = self._gather_targets(boards_dir)
+        targets = self._gather_targets(boards_dir)
+
+        if args.list:
+            import json
+
+            targets = [
+                {
+                    "board": board,
+                    "shield": shield
+                }
+                for board, shield in targets
+            ]
+
+            print(json.dumps(targets))
+
+            sys.exit(0)
 
         self.failed = False
-        for interconnect, shields in interconnects.items():
-            for shield in shields:
-                self._compile(zmk_app_dir, interconnect, shield)
-
-        for board in boards:
-            self._compile(zmk_app_dir, board, None)
+        for board, shield in targets:
+            self._compile(zmk_app_dir, board, shield)
 
         sys.exit(1 if self.failed else 0)
