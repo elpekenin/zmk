@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#pragma once
+
+#include <stdint.h>
+
+#include <zephyr/kernel_version.h>
+
+#cmakedefine ZEPHYR_BRANCH "@ZEPHYR_BRANCH@"
+#cmakedefine ZEPHYR_HASH "@ZEPHYR_HASH@"
+
+#cmakedefine ZMK_BRANCH "@ZMK_BRANCH@"
+#cmakedefine ZMK_HASH "@ZMK_HASH@"
+
+struct git_repo {
+    const char *branch;
+    const char *hash;
+};
+
+struct fw_version {
+    struct {
+        union {
+            uint32_t full;
+            struct {
+                uint8_t major;
+                uint8_t minor;
+                uint8_t patch;
+                uint8_t reserved;
+            };
+        } version;
+        struct git_repo repo;
+    } zephyr;
+
+    struct {
+        struct git_repo repo;
+    } zmk;
+};
+
+struct fw_version get_fw_version(void);

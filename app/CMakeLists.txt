@@ -103,3 +103,53 @@ add_subdirectory(src/display/)
 add_subdirectory_ifdef(CONFIG_SETTINGS src/settings/)
 
 zephyr_cc_option(-Wfatal-errors)
+
+execute_process(
+  COMMAND git rev-parse --short HEAD
+  WORKING_DIRECTORY ${ZEPHYR_BASE}
+  OUTPUT_VARIABLE ZEPHYR_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  RESULT_VARIABLE return_code
+)
+if (return_code)
+  message(WARNING "Zephyr's hash could not be found.")
+endif()
+
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD
+  WORKING_DIRECTORY ${ZEPHYR_BASE}
+  OUTPUT_VARIABLE ZEPHYR_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  RESULT_VARIABLE return_code
+)
+if (return_code)
+  message(WARNING "Zephyr's branch could not be found.")
+endif()
+
+if(CONFIG_ZMK_BEHAVIOR_VERSION)
+  execute_process(
+    COMMAND git rev-parse --short HEAD
+    OUTPUT_VARIABLE ZMK_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE return_code
+  )
+  if (return_code)
+    message(WARNING "ZMK's hash could not be found.")
+  endif()
+
+  execute_process(
+    COMMAND git rev-parse --abbrev-ref HEAD
+    OUTPUT_VARIABLE ZMK_BRANCH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE return_code
+  )
+  if (return_code)
+    message(WARNING "ZMK's branch could not be found.")
+  endif()
+
+  configure_file(${CMAKE_CURRENT_LIST_DIR}/include/zmk/version.h.in ${PROJECT_BINARY_DIR}/include/generated/zmk/version.h)
+
+  target_include_directories(app PRIVATE ${PROJECT_BINARY_DIR}/include)
+  target_sources(app PRIVATE src/version.c)
+  target_sources(app PRIVATE src/behaviors/behavior_version.c)
+endif()

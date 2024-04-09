@@ -1,0 +1,8 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Show version info
+
+compatible: "zmk,behavior-version"
+
+include: zero_param.yaml
