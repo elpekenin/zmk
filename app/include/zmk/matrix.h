@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file matrix.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/devicetree.h>

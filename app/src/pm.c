@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file pm.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/init.h>

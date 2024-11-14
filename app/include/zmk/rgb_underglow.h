@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file rgb_underglow.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 struct zmk_led_hsb {

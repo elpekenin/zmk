@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file reset_settings_none.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zmk/settings.h>
 
 int zmk_settings_erase(void) {

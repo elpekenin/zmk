@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file physical_layouts.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/devicetree.h>
 #include <zephyr/device.h>
 #include <zephyr/pm/device.h>

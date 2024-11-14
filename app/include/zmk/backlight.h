@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file backlight.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 int zmk_backlight_on(void);

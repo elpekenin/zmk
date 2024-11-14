@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file gatt_rpc_transport.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <sys/types.h>

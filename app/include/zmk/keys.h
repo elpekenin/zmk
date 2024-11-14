@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file keys.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/kernel.h>

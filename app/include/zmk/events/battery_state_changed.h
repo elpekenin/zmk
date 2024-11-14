@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file battery_state_changed.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/kernel.h>

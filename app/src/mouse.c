@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file mouse.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <drivers/behavior.h>
 #include <zephyr/logging/log.h>
 

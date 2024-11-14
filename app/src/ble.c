@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file ble.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 

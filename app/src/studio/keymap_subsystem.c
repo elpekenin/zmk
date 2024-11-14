@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file keymap_subsystem.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_DECLARE(zmk_studio, CONFIG_ZMK_STUDIO_LOG_LEVEL);

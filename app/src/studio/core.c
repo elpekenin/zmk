@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file core.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zmk/studio/core.h>
 
 ZMK_EVENT_IMPL(zmk_studio_core_lock_state_changed);

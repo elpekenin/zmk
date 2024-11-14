@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file combo.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define DT_DRV_COMPAT zmk_combos
 
 #include <zephyr/device.h>

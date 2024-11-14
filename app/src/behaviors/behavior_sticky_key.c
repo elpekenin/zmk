@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file behavior_sticky_key.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define DT_DRV_COMPAT zmk_behavior_sticky_key
 
 #include <zephyr/device.h>

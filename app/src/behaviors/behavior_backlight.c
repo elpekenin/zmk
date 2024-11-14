@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file behavior_backlight.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define DT_DRV_COMPAT zmk_behavior_backlight
 
 #include <zephyr/device.h>

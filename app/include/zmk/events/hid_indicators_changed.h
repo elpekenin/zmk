@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file hid_indicators_changed.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zmk/hid_indicators_types.h>

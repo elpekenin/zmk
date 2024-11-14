@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file split_peripheral_status_changed.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/kernel.h>
 #include <zmk/events/split_peripheral_status_changed.h>
 

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file event_manager.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file conditional_layer.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define DT_DRV_COMPAT zmk_conditional_layers
 
 #include <stdint.h>

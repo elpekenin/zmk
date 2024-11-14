@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file behavior_none.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define DT_DRV_COMPAT zmk_behavior_none
 
 #include <zephyr/device.h>

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file pm.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 int zmk_pm_suspend_devices(void);

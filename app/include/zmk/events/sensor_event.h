@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file sensor_event.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/device.h>

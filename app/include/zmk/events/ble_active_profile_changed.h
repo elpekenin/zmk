@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file ble_active_profile_changed.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/kernel.h>

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file behavior_queue.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zmk/behavior_queue.h>
 #include <zmk/behavior.h>
 

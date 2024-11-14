@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file endpoints_types.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 /**

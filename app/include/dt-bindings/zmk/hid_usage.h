@@ -8,6 +8,10 @@
  * https://www.usb.org/sites/default/files/hut1_21.pdf
  */
 
+/** @file hid_usage.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 /* Page 0x01: Generic Desktop */

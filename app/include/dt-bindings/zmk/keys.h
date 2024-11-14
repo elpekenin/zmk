@@ -3,6 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
+
+/** @file keys.h
+ *  @brief FILL ME PLEASE!.
+ */
 #pragma once
 
 #include <dt-bindings/zmk/hid_usage.h>

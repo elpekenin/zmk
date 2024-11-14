@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file backlight.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define BL_ON_CMD 0
 #define BL_OFF_CMD 1
 #define BL_TOG_CMD 2

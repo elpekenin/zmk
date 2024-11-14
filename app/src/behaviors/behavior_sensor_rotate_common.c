@@ -1,4 +1,8 @@
 
+/** @file behavior_sensor_rotate_common.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/logging/log.h>

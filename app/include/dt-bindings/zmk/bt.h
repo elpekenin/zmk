@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file bt.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define BT_CLR_CMD 0
 #define BT_NXT_CMD 1
 #define BT_PRV_CMD 2

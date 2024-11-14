@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file keymap.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zmk/events/position_state_changed.h>

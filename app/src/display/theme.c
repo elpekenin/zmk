@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file theme.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <lvgl.h>
 
 #if defined(CONFIG_ZMK_LV_FONT_DEFAULT_SMALL_MONTSERRAT_8)

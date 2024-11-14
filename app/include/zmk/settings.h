@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file settings.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 /**

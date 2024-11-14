@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file service.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/types.h>
 #include <zephyr/sys/util.h>

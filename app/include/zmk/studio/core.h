@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file core.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zmk/event_manager.h>

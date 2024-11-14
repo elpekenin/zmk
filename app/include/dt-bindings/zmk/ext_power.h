@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file ext_power.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define EXT_POWER_OFF_CMD 0
 #define EXT_POWER_ON_CMD 1
 #define EXT_POWER_TOGGLE_CMD 2

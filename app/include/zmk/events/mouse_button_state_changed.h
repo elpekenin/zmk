@@ -5,6 +5,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file mouse_button_state_changed.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zmk/hid.h>

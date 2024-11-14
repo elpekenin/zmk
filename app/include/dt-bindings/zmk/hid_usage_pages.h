@@ -8,6 +8,10 @@
  * https://www.usb.org/sites/default/files/hut1_21.pdf
  */
 
+/** @file hid_usage_pages.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #define ZMK_HID_USAGE(page, id) ((page << 16) | id)

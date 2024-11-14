@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file endpoints.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/init.h>
 #include <zephyr/settings/settings.h>
 

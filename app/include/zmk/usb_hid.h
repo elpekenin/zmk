@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file usb_hid.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <stdint.h>

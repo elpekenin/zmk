@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file rpc.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include "msg_framing.h"
 
 #include <pb_encode.h>

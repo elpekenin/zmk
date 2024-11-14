@@ -3,6 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
+
+/** @file mouse.h
+ *  @brief FILL ME PLEASE!.
+ */
 #pragma once
 
 #include <zephyr/dt-bindings/dt-util.h>

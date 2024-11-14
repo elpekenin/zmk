@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file hog.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/settings/settings.h>
 #include <zephyr/init.h>
 

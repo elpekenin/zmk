@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file reset_settings_on_start.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/init.h>
 
 #include <zmk/settings.h>

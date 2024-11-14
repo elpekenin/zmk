@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file peripheral_status.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <lvgl.h>

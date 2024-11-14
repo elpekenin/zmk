@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file reset_settings_fcb.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zmk/settings.h>
 
 #include <zephyr/logging/log.h>

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file central.c
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <zephyr/types.h>
 #include <zephyr/init.h>
 

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file reset.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define RST_WARM 0x00
 #define RST_COLD 0x01
 

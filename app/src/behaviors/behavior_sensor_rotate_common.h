@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file behavior_sensor_rotate_common.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #include <drivers/behavior.h>
 #include <zmk/behavior.h>
 #include <zmk/keymap.h>

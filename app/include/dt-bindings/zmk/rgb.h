@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/** @file rgb.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #define RGB_TOG_CMD 0
 #define RGB_ON_CMD 1
 #define RGB_OFF_CMD 2

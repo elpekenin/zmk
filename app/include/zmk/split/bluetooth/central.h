@@ -1,4 +1,8 @@
 
+/** @file central.h
+ *  @brief FILL ME PLEASE!.
+ */
+
 #pragma once
 
 #include <zephyr/bluetooth/addr.h>
